@@ -27,7 +27,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -39,7 +38,7 @@
     overflow-x: hidden;
   }
 
-  /* ── Hero ── */
+  /* ─── Hero ─── */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -62,6 +61,29 @@
     pointer-events: none;
   }
 
+  /* Animated grid of faint numbers */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.06;
+  }
+
+  .hero-grid span {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text);
+    animation: drift 20s linear infinite;
+  }
+
+  @keyframes drift {
+    from { transform: translateY(0); opacity: 0.5; }
+    50% { opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+  }
+
   .hero-label {
     font-family: var(--mono);
     font-size: 0.75rem;
@@ -77,7 +99,7 @@
     font-family: var(--serif);
     font-size: clamp(2.5rem, 7vw, 5.5rem);
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 1.08;
     max-width: 14ch;
     background: linear-gradient(135deg, var(--text) 0%, var(--accent-amber) 50%, var(--accent-orange) 100%);
     -webkit-background-clip: text;
@@ -91,7 +113,7 @@
     font-family: var(--body);
     font-size: 1.2rem;
     color: var(--text-dim);
-    max-width: 50ch;
+    max-width: 52ch;
     margin-top: 1.5rem;
     font-style: italic;
     opacity: 0;
@@ -119,29 +141,18 @@
     opacity: 0;
     animation: fadeUp 0.6s 1.8s forwards, pulse 2s 2.5s infinite;
   }
+  .scroll-hint::after { content: '↓'; display: block; text-align: center; margin-top: 0.3rem; font-size: 1rem; }
 
-  .scroll-hint::after {
-    content: '↓';
-    display: block;
-    text-align: center;
-    margin-top: 0.3rem;
-    font-size: 1rem;
-  }
-
-  /* ── Sections ── */
+  /* ─── Sections ─── */
   .section {
     max-width: 720px;
     margin: 0 auto;
     padding: 4rem 2rem;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.8s, transform 0.8s;
+    transition: opacity 0.8s ease, transform 0.8s ease;
   }
-
-  .section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .section.visible { opacity: 1; transform: translateY(0); }
 
   .section-wide {
     max-width: 960px;
@@ -149,7 +160,7 @@
     padding: 4rem 2rem;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.8s, transform 0.8s;
+    transition: opacity 0.8s ease, transform 0.8s ease;
   }
   .section-wide.visible { opacity: 1; transform: translateY(0); }
 
@@ -170,18 +181,13 @@
   }
 
   p { margin-bottom: 1.25rem; }
-
-  .lead {
-    font-size: 1.25rem;
-    color: var(--text);
-    line-height: 1.8;
-  }
-
+  .lead { font-size: 1.25rem; color: var(--text); line-height: 1.8; }
   .dim { color: var(--text-dim); }
   .muted { color: var(--text-muted); }
-
   strong { color: var(--accent-orange); font-weight: 600; }
+  em { color: var(--text); }
 
+  /* ─── Highlight boxes ─── */
   .highlight-box {
     background: var(--bg-elevated);
     border-left: 3px solid var(--accent-orange);
@@ -189,12 +195,12 @@
     margin: 2rem 0;
     border-radius: 0 8px 8px 0;
   }
-
   .highlight-box.blue { border-left-color: var(--accent-blue); }
   .highlight-box.emerald { border-left-color: var(--accent-emerald); }
   .highlight-box.rose { border-left-color: var(--accent-rose); }
+  .highlight-box.violet { border-left-color: var(--accent-violet); }
 
-  /* ── Math blocks ── */
+  /* ─── Math blocks ─── */
   .math-block {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -208,7 +214,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .math-block::before {
     content: '';
     position: absolute;
@@ -226,36 +231,13 @@
     margin-bottom: 1rem;
   }
 
-  .math-big {
-    font-size: 1.4rem;
-    color: var(--accent-amber);
-    font-weight: 500;
-  }
+  .math-big { font-size: 1.4rem; color: var(--accent-amber); font-weight: 500; }
 
   .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 0.15em; }
   .frac-num { border-bottom: 1.5px solid var(--text-dim); padding: 0 0.3em 0.15em; font-size: 0.9em; }
   .frac-den { padding: 0.15em 0.3em 0; font-size: 0.9em; }
 
-  /* ── Dividers ── */
-  .divider {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    height: 1px;
-    position: relative;
-  }
-
-  .divider::after {
-    content: '';
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-  }
-
-  /* ── Interactive Chart ── */
+  /* ─── Chart containers ─── */
   .chart-container {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -265,7 +247,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .chart-container::before {
     content: '';
     position: absolute;
@@ -283,11 +264,7 @@
     gap: 1rem;
   }
 
-  .chart-title {
-    font-family: var(--serif);
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
+  .chart-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; }
 
   .chart-controls {
     display: flex;
@@ -297,7 +274,6 @@
     font-size: 0.8rem;
     color: var(--text-dim);
   }
-
   .chart-controls label { margin-right: 0.25rem; }
 
   .chart-controls input[type="range"] {
@@ -308,7 +284,6 @@
     border-radius: 2px;
     outline: none;
   }
-
   .chart-controls input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px;
@@ -317,42 +292,26 @@
     cursor: pointer;
   }
 
-  .n-display {
-    font-family: var(--mono);
-    color: var(--accent-orange);
-    min-width: 3.5ch;
-    text-align: right;
-  }
+  .n-display { font-family: var(--mono); color: var(--accent-orange); min-width: 3.5ch; text-align: right; }
 
-  canvas {
-    width: 100%;
-    height: 380px;
-    display: block;
-  }
+  canvas { width: 100%; height: 380px; display: block; }
 
   .chart-legend {
     display: flex;
     gap: 2rem;
     margin-top: 1rem;
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     justify-content: center;
     flex-wrap: wrap;
   }
 
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 16px; height: 2px; flex-shrink: 0; }
+  .legend-dash { width: 16px; height: 0; border-top: 2px dashed; flex-shrink: 0; }
 
-  .legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* ── Data Table ── */
+  /* ─── Data Table ─── */
   .data-table-wrap {
     overflow-x: auto;
     margin: 2rem 0;
@@ -360,54 +319,25 @@
     border: 1px solid var(--border);
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-  }
-
+  table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.85rem; }
   thead { background: var(--bg-card); }
-
-  th {
-    padding: 0.75rem 1rem;
-    text-align: right;
-    font-weight: 500;
-    color: var(--text-dim);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-
+  th { padding: 0.75rem 1rem; text-align: right; font-weight: 500; color: var(--text-dim); border-bottom: 1px solid var(--border); white-space: nowrap; }
   th:first-child { text-align: left; }
-
-  td {
-    padding: 0.6rem 1rem;
-    text-align: right;
-    border-bottom: 1px solid rgba(68,64,60,0.4);
-  }
-
-  td:first-child {
-    text-align: left;
-    color: var(--text-dim);
-  }
-
+  td { padding: 0.6rem 1rem; text-align: right; border-bottom: 1px solid rgba(68,64,60,0.4); }
+  td:first-child { text-align: left; color: var(--text-dim); }
   tr:hover td { background: rgba(249,115,22,0.03); }
-
   .td-highlight { color: var(--accent-orange); font-weight: 500; }
   .td-blue { color: var(--accent-blue); }
   .td-emerald { color: var(--accent-emerald); }
 
-  /* ── Comparison cards ── */
+  /* ─── Animated comparison cards ─── */
   .comparison {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
     margin: 2rem 0;
   }
-
-  @media (max-width: 640px) {
-    .comparison { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 640px) { .comparison { grid-template-columns: 1fr; } }
 
   .comp-card {
     background: var(--bg-elevated);
@@ -416,7 +346,14 @@
     padding: 1.5rem;
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    transform: translateX(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
+
+  .comp-card.from-left { transform: translateX(-40px); }
+  .comp-card.from-right { transform: translateX(40px); }
+  .comp-card.revealed { opacity: 1; transform: translateX(0); }
 
   .comp-card::before {
     content: '';
@@ -424,17 +361,12 @@
     top: 0; left: 0; right: 0;
     height: 3px;
   }
+  .comp-card.orange::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-amber)); }
+  .comp-card.blue::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet)); }
 
-  .comp-card.orange::before { background: var(--accent-orange); }
-  .comp-card.blue::before { background: var(--accent-blue); }
+  .comp-card h4 { font-family: var(--serif); font-size: 1.1rem; margin-bottom: 0.75rem; }
 
-  .comp-card h4 {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .comp-card .comp-formula {
+  .comp-formula {
     font-family: var(--mono);
     font-size: 0.95rem;
     margin: 0.75rem 0;
@@ -444,25 +376,31 @@
     text-align: center;
   }
 
-  .comp-card ul {
+  .comp-list {
     list-style: none;
     padding: 0;
     font-size: 0.9rem;
     color: var(--text-dim);
   }
-
-  .comp-card li {
-    padding: 0.25rem 0;
-    padding-left: 1em;
-    text-indent: -1em;
+  .comp-list li {
+    padding: 0.3rem 0;
+    padding-left: 1.2em;
+    text-indent: -1.2em;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
-
-  .comp-card li::before {
-    content: '→ ';
-    color: var(--text-muted);
+  .comp-card.revealed .comp-list li {
+    opacity: 1;
+    transform: translateY(0);
   }
+  .comp-card.revealed .comp-list li:nth-child(1) { transition-delay: 0.3s; }
+  .comp-card.revealed .comp-list li:nth-child(2) { transition-delay: 0.45s; }
+  .comp-card.revealed .comp-list li:nth-child(3) { transition-delay: 0.6s; }
+  .comp-card.revealed .comp-list li:nth-child(4) { transition-delay: 0.75s; }
+  .comp-list li::before { content: '→ '; color: var(--text-muted); }
 
-  /* ── Pullquote ── */
+  /* ─── Pullquote ─── */
   .pullquote {
     font-family: var(--serif);
     font-size: clamp(1.4rem, 3vw, 2rem);
@@ -478,14 +416,11 @@
     transform: translateY(20px);
     transition: opacity 0.8s, transform 0.8s;
   }
-
   .pullquote.visible { opacity: 1; transform: translateY(0); }
-
   .pullquote::before, .pullquote::after {
     content: '';
     position: absolute;
-    left: 20%;
-    right: 20%;
+    left: 20%; right: 20%;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent-amber), transparent);
     opacity: 0.3;
@@ -493,7 +428,7 @@
   .pullquote::before { top: 0; }
   .pullquote::after { bottom: 0; }
 
-  /* ── Open problem ── */
+  /* ─── Open problem ─── */
   .open-problem {
     background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(249,115,22,0.05));
     border: 1px solid rgba(167,139,250,0.2);
@@ -502,12 +437,7 @@
     margin: 2rem 0;
     position: relative;
   }
-
-  .open-problem h3 {
-    color: var(--accent-violet);
-    margin-top: 0;
-  }
-
+  .open-problem h3 { color: var(--accent-violet); margin-top: 0; }
   .open-tag {
     font-family: var(--mono);
     font-size: 0.65rem;
@@ -521,31 +451,7 @@
     margin-bottom: 1rem;
   }
 
-  /* ── Footer ── */
-  footer {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    border-top: 1px solid var(--border);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
-
-  footer a { color: var(--accent-orange); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
-  }
-
-  /* ── Interactive explorer ── */
+  /* ─── Explorer ─── */
   .explorer {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -556,21 +462,20 @@
 
   .explorer-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-top: 1.5rem;
   }
-
-  @media (max-width: 640px) {
-    .explorer-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 640px) { .explorer-grid { grid-template-columns: 1fr; } }
 
   .stat-card {
     background: rgba(0,0,0,0.3);
     border-radius: 10px;
     padding: 1.25rem;
     text-align: center;
+    transition: transform 0.2s;
   }
+  .stat-card:hover { transform: translateY(-2px); }
 
   .stat-label {
     font-family: var(--mono);
@@ -581,18 +486,8 @@
     margin-bottom: 0.5rem;
   }
 
-  .stat-value {
-    font-family: var(--mono);
-    font-size: 1.6rem;
-    font-weight: 500;
-  }
-
-  .stat-sub {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
-  }
+  .stat-value { font-family: var(--mono); font-size: 1.6rem; font-weight: 500; }
+  .stat-sub { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
 
   .orange { color: var(--accent-orange); }
   .blue { color: var(--accent-blue); }
@@ -601,7 +496,6 @@
   .violet { color: var(--accent-violet); }
   .amber { color: var(--accent-amber); }
 
-  /* Inline code */
   code {
     font-family: var(--mono);
     font-size: 0.85em;
@@ -611,74 +505,156 @@
     color: var(--accent-amber);
   }
 
-  /* Number line viz */
-  .number-line {
-    position: relative;
-    height: 60px;
-    margin: 2rem 0;
-    background: var(--bg-elevated);
-    border-radius: 8px;
-    overflow: hidden;
+  /* ─── Failure counter ─── */
+  .failure-reveal {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
   }
 
-  .number-line-track {
-    position: absolute;
-    top: 50%;
-    left: 2rem;
-    right: 2rem;
-    height: 2px;
-    background: var(--border);
+  .failure-num {
+    text-align: center;
   }
 
-  .nl-tick {
-    position: absolute;
-    top: 50%;
-    width: 2px;
-    height: 16px;
-    transform: translateY(-50%);
-    border-radius: 1px;
-  }
-
-  .nl-label {
-    position: absolute;
-    top: calc(50% + 14px);
+  .failure-val {
     font-family: var(--mono);
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    transform: translateX(-50%);
+    font-size: 3rem;
+    font-weight: 500;
+    line-height: 1;
   }
+
+  .failure-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  .failure-vs {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    padding-bottom: 0.8rem;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  footer a { color: var(--accent-orange); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ─── Animations ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .count-anim {
+    opacity: 0;
+    animation: countUp 0.6s ease forwards;
+  }
+
+  /* ─── Divider ─── */
+  .divider {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 1px;
+    position: relative;
+  }
+  .divider::after {
+    content: '';
+    position: absolute;
+    left: 10%; right: 10%; top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* Physics reasons */
+  .physics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  @media (max-width: 640px) { .physics-grid { grid-template-columns: 1fr; } }
+
+  .physics-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .physics-card.revealed { opacity: 1; transform: translateY(0); }
+  .physics-card:nth-child(1) { transition-delay: 0s; }
+  .physics-card:nth-child(2) { transition-delay: 0.15s; }
+  .physics-card:nth-child(3) { transition-delay: 0.3s; }
+  .physics-card:nth-child(4) { transition-delay: 0.45s; }
+
+  .physics-card h4 {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .physics-card p { font-size: 0.9rem; color: var(--text-dim); margin: 0; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════ HERO ═══════════ -->
+<!-- ═══════ HERO ═══════ -->
 <section class="hero">
+  <div class="hero-grid" id="heroGrid"></div>
   <div class="hero-label">Number Theory × Geometry</div>
   <h1>What Shape Is a Box Made of Primes?</h1>
   <p class="hero-sub">
     Consecutive integers build predictable boxes. Consecutive primes build wilder ones.
     The difference reveals something deep about irregularity itself.
   </p>
-  <p class="hero-meta">Lee McCulloch-James · Department of Natural Science, Dwight London · 2025</p>
+  <p class="hero-meta">Lee McCulloch-James · Dwight School London · 2025</p>
   <div class="scroll-hint">SCROLL TO EXPLORE</div>
 </section>
 
-<!-- ═══════════ ACT 1: THE QUESTION ═══════════ -->
+<!-- ═══════ ACT 1 ═══════ -->
 <section class="section" data-anim>
   <h2>The simplest interesting box</h2>
   <p class="lead">
-    Take sides 1, 2, 3. You get a 3D box — a cuboid — with volume 6 and a particular shape.
-    Now take sides 1, 2, 3, 4 and build in 4D. Keep going. In <em>n</em> dimensions, the box has sides
-    1 through <em>n</em> and volume <em>n</em>!
+    Take the integers 1, 2, 3 as sides of a box. You get a cuboid — volume 6, shape slightly elongated.
+    Now take 1, 2, 3, 4 and build in four dimensions. Keep going. In <em>n</em> dimensions,
+    the box has sides 1 through <em>n</em> and its volume is <em>n</em>!
   </p>
   <p>
-    This is the <strong>oblong cuboid</strong>: an ancient idea (oblong numbers go back to the Greeks)
-    promoted to higher dimensions. Its volume is a factorial. Its shape encodes the
-    harmonic series. And it turns out we can measure its shape exactly.
+    This is the <strong>oblong cuboid</strong>: the ancient idea of oblong numbers (products of two consecutive integers,
+    dating to the Greeks) promoted to arbitrary dimension. Its volume is a factorial. Its surface encodes the
+    harmonic series. And it turns out we can measure its shape <em>exactly</em>.
   </p>
   <p>
-    But what happens if instead of consecutive integers, we use <strong>consecutive primes</strong>?
-    Sides 2, 3, 5, 7, 11, … — a <strong>puboid</strong>. Same question, wildly different answer.
+    But what happens if we use <strong>consecutive primes</strong> instead? Sides 2, 3, 5, 7, 11, …
+    — a box we'll call a <strong>puboid</strong>. Same question. Wildly different answer. And the gap
+    between the two reveals a structural divide that reaches all the way to quantum field theory.
   </p>
 </section>
 
@@ -686,13 +662,13 @@
   Factorials have Stirling. Primorials have&nbsp;…&nbsp;nothing.
 </div>
 
-<!-- ═══════════ ACT 2: MEASURING SHAPE ═══════════ -->
+<!-- ═══════ ACT 2 ═══════ -->
 <section class="section" data-anim>
   <h2>Isolating shape from size</h2>
   <p>
-    The surface-to-volume ratio S/V is the obvious measure — but it's <em>scale-dependent</em>.
-    Double every side and S/V halves. We need something that cares only about
-    the <em>proportions</em> of the side lengths, not their absolute size.
+    The surface-to-volume ratio S/V is the obvious shape measure — but it's <em>scale-dependent</em>.
+    Double every side and S/V halves. We need a quantity that sees only the <em>proportions</em>,
+    blind to absolute magnitude. The isoperimetric quotient does exactly this:
   </p>
 
   <div class="math-block">
@@ -703,117 +679,167 @@
   </div>
 
   <p>
-    Here <code>G</code> is the geometric mean and <code>H</code> the harmonic mean of the side lengths.
-    The factor 2n is just the reference value for a hypercube (all sides equal).
-    Everything interesting lives in the ratio <strong>G/H</strong>.
+    <code>G</code> is the geometric mean of the side lengths; <code>H</code> is the harmonic mean.
+    The factor 2n is just the reference value for a perfect hypercube (all sides equal).
+    Everything interesting lives in <strong>G/H</strong>.
   </p>
 
   <div class="highlight-box">
-    <strong>G/H = 1</strong> means perfect symmetry (a hypercube). <strong>G/H > 1</strong> means the sides
-    are unequal — more "stretched". Larger G/H = more asymmetric shape.
-    This is guaranteed by the <em>AM-GM-HM inequality</em>.
+    <strong>G/H = 1</strong> means perfect symmetry (a hypercube). <strong>G/H > 1</strong> means
+    the sides are unequal — more "stretched." Larger G/H = more asymmetric.
+    This is guaranteed by the AM–GM–HM inequality: H ≤ G ≤ A, with equality iff all values coincide.
   </div>
 
   <p>
-    So our question becomes concrete: <em>how does G/H grow with dimension?</em>
+    Our question becomes concrete: <em>how does G/H grow with dimension n, and how does the answer
+    change when we swap integers for primes?</em>
   </p>
 </section>
 
-<!-- ═══════════ ACT 3: INTEGERS — EXACT ═══════════ -->
+<!-- ═══════ ACT 3 ═══════ -->
 <section class="section" data-anim>
   <h2>Integers: the exact answer</h2>
   <p>
-    For the oblong cuboid (sides 1, 2, …, n), both means have classical asymptotics.
-    Stirling's approximation gives G = (n!)<sup>1/n</sup> ∼ n/e, while the harmonic
-    series gives H ∼ n/log n. The ratio:
+    For the oblong cuboid (sides 1, 2, …, n), both means have classical asymptotics rooted in 18th-century analysis.
+    Stirling's approximation gives G = (n!)<sup>1/n</sup> ~ n/e. The harmonic series gives H ~ n/log n. Their ratio:
   </p>
 
   <div class="math-block">
     <div class="math-label">Oblong G/H — Exact Asymptotics</div>
     <div class="math-big">
-      <span class="frac"><span class="frac-num">G</span><span class="frac-den">H</span></span> ∼ <span class="frac"><span class="frac-num">log n</span><span class="frac-den">e</span></span>
+      <span class="frac"><span class="frac-num">G</span><span class="frac-den">H</span></span> ~ <span class="frac"><span class="frac-num">log n</span><span class="frac-den"><em>e</em></span></span>
     </div>
     <div style="margin-top:0.75rem; font-size:0.85rem; color:var(--text-dim)">
-      Clean. Closed-form. Euler–Mascheroni constant under the hood.
+      Clean. Closed-form. The Euler–Mascheroni constant γ ≈ 0.577 governs corrections.
     </div>
   </div>
 
   <p>
-    Shape asymmetry grows logarithmically — slowly, predictably, exactly. The Euler–Mascheroni
-    constant γ ≈ 0.577 governs the correction terms, and γ = −Γ′(1) connects to the gamma
-    function, which is why it appears throughout physics: QED regularisation, Feynman integrals,
-    dimensional analysis.
+    Shape asymmetry grows logarithmically — slowly, predictably, exactly. The constant γ = −Γ′(1)
+    connects this geometry to the gamma function and thereby to physics: dimensional regularisation
+    in QED, Feynman integrals, analytic continuation. The shape of a box built from integers speaks the
+    same language as quantum field theory.
   </p>
 </section>
 
-<!-- ═══════════ ACT 4: PRIMES — THE FAILURE ═══════════ -->
+<!-- ═══════ ACT 4: FAILURE ═══════ -->
 <section class="section" data-anim>
   <h2>Primes: where the theory breaks</h2>
   <p>
-    For the puboid (sides p₁, p₂, …, pₙ), we bring serious machinery. Chebyshev's theorem
-    controls the geometric mean via θ(x) ∼ x. The Meissel–Mertens theorem handles the
-    harmonic sum. First-order prediction:
+    For the puboid (sides p₁, p₂, …, pₙ), we bring serious machinery.
+    Chebyshev's theorem controls the geometric mean via the first Chebyshev function θ(x) ~ x.
+    The Meissel–Mertens theorem handles the harmonic sum of reciprocal primes.
+    First-order prediction:
   </p>
 
   <div class="math-block">
     <div class="math-label">Naïve Prediction</div>
     <div class="math-big">
-      <span class="frac"><span class="frac-num">G</span><span class="frac-den">H</span></span> ∼ log log n
+      <span class="frac"><span class="frac-num">G</span><span class="frac-den">H</span></span> ~ log log n
     </div>
-    <div style="margin-top:0.75rem; font-size:0.85rem; color:var(--text-dim)">
-      At n = 1000 this predicts ≈ 1.93
+  </div>
+
+  <div class="failure-reveal" id="failureReveal" data-anim>
+    <div class="failure-num">
+      <div class="failure-val emerald count-anim" style="animation-delay:0.2s">1.93</div>
+      <div class="failure-label">Predicted (n = 1000)</div>
+    </div>
+    <div class="failure-vs">vs</div>
+    <div class="failure-num">
+      <div class="failure-val rose count-anim" style="animation-delay:0.5s">6.07</div>
+      <div class="failure-label">Actual (n = 1000)</div>
+    </div>
+    <div class="failure-vs">→</div>
+    <div class="failure-num">
+      <div class="failure-val amber count-anim" style="animation-delay:0.8s">3.1×</div>
+      <div class="failure-label">Factor of error</div>
     </div>
   </div>
 
   <p>
-    The actual value at n = 1000? <strong style="color:var(--accent-rose)">6.07</strong>.
-    Off by a factor of three. The approximation θ(pₙ) ∼ pₙ hides sub-leading terms that
-    compound devastatingly through the exponential in the geometric mean.
+    Off by a factor of three. This isn't a rounding error — it's a <em>qualitative</em> failure.
+    The culprit: the approximation θ(pₙ) ~ pₙ hides a slowly vanishing error εₙ that enters
+    as an <em>exponent</em>. Since G = exp(θ(pₙ)/n), a small additive error in the exponent becomes
+    a multiplicative error in G itself. Terms that are individually negligible compound
+    devastatingly through exponentiation.
   </p>
 
   <div class="highlight-box rose">
-    This isn't a small correction — it's a qualitative failure. The slowly vanishing error
-    ε<sub>n</sub> in θ(pₙ) = pₙ(1 − εₙ) gets <em>exponentiated</em>, amplifying it from negligible to dominant.
-    There is no "Stirling's approximation for primorials."
+    This is the fundamental obstacle: <strong>there is no "Stirling's approximation for primorials."</strong>
+    Factorials admit clean asymptotic expansions because integers are uniformly spaced.
+    Primorials resist them because primes are irregularly distributed.
+    The error is negligible — until you exponentiate it.
   </div>
 </section>
 
 <div class="pullquote" data-anim>
-  The error is negligible — until you exponentiate it.
+  A negligible error, exponentiated, becomes a factor of three.
 </div>
 
-<!-- ═══════════ ACT 5: INTERACTIVE CHART ═══════════ -->
+<!-- ═══════ ACT 5: MAIN CHART ═══════ -->
 <section class="section-wide" data-anim>
   <h2>See it diverge</h2>
   <p style="max-width:720px">
-    Below, both G/H curves are computed live from actual primes. Drag the slider to extend the
-    dimension. Watch how the puboid curve pulls steadily away from integers — and how the
-    naïve log log n prediction (dashed) completely misses the true growth.
+    Both G/H curves below are computed live from actual primes (sieved client-side).
+    Drag the slider to extend the dimension. Watch the puboid (blue) pull away from the oblong (orange)
+    — and how the naïve log log n prediction (pink dashes) completely misses the true growth.
   </p>
 
   <div class="chart-container">
     <div class="chart-header">
       <div class="chart-title">G/H Growth: Integers vs Primes</div>
       <div class="chart-controls">
-        <label for="nSlider">Dimensions:</label>
-        <input type="range" id="nSlider" min="10" max="500" value="200" step="10">
+        <label for="nSlider">Max n:</label>
+        <input type="range" id="nSlider" min="20" max="500" value="200" step="10">
         <span class="n-display" id="nDisplay">200</span>
       </div>
     </div>
     <canvas id="mainChart"></canvas>
     <div class="chart-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-orange)"></div> Oblong G/H</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-blue)"></div> Puboid G/H</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-emerald); opacity:0.5"></div> log(n)/e (exact asymptotic)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-rose); opacity:0.5"></div> log log n (failed prediction)</div>
+      <div class="legend-item"><div class="legend-line" style="background:var(--accent-orange)"></div> Oblong G/H</div>
+      <div class="legend-item"><div class="legend-line" style="background:var(--accent-blue)"></div> Puboid G/H</div>
+      <div class="legend-item"><div class="legend-dash" style="border-color:var(--accent-emerald)"></div> log(n)/e</div>
+      <div class="legend-item"><div class="legend-dash" style="border-color:var(--accent-rose)"></div> log log n</div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ ACT 6: EXPLORER ═══════════ -->
+<!-- ═══════ ACT 6: C(n) CHART ═══════ -->
+<section class="section-wide" data-anim>
+  <h2>The mysterious coefficient C(n)</h2>
+  <p style="max-width:720px">
+    Since exact asymptotics fail, the data suggests an empirical law: G/H ≈ C(n) · log pₙ.
+    The coefficient C(n) increases slowly and has <strong>no known closed form</strong>.
+    Here it is, computed directly:
+  </p>
+
+  <div class="chart-container">
+    <div class="chart-header">
+      <div class="chart-title">C(n) = (G/H)<sub>pub</sub> / log p<sub>n</sub></div>
+      <div class="chart-controls">
+        <label for="cnSlider">Max n:</label>
+        <input type="range" id="cnSlider" min="20" max="500" value="300" step="10">
+        <span class="n-display" id="cnDisplay">300</span>
+      </div>
+    </div>
+    <canvas id="cnChart"></canvas>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-line" style="background:var(--accent-violet)"></div> C(n) computed</div>
+      <div class="legend-item"><div class="legend-dash" style="border-color:var(--accent-amber)"></div> 1/e ≈ 0.368 (oblong coefficient)</div>
+    </div>
+  </div>
+
+  <p style="max-width:720px">
+    Notice C(n) is already nearly double the oblong coefficient 1/e ≈ 0.368 at moderate dimensions,
+    and still climbing. It's approximately 0.48 at n=50, 0.68 at n=1000, 0.77 at n=5000.
+    Whether it converges to a limit or diverges (slowly) is unknown.
+  </p>
+</section>
+
+<!-- ═══════ ACT 7: EXPLORER ═══════ -->
 <section class="section-wide" data-anim>
   <h2>Explore a single dimension</h2>
-  <p style="max-width:720px">Pick a value of n and see the exact computed values side by side.</p>
+  <p style="max-width:720px">Pick a dimension and see exact computed values side by side.</p>
 
   <div class="explorer">
     <div class="chart-controls" style="justify-content:center">
@@ -821,60 +847,42 @@
       <input type="range" id="expSlider" min="3" max="500" value="100" step="1">
       <span class="n-display" id="expDisplay">100</span>
     </div>
-
-    <div class="explorer-grid" id="explorerGrid">
-      <!-- filled by JS -->
-    </div>
+    <div class="explorer-grid" id="explorerGrid"></div>
   </div>
 </section>
 
-<!-- ═══════════ ACT 7: THE EMPIRICAL LAW ═══════════ -->
+<!-- ═══════ ACT 8: DATA TABLE ═══════ -->
 <section class="section" data-anim>
-  <h2>What the data actually says</h2>
-  <p>
-    Since exact asymptotics fail, we look at the data empirically. The puboid G/H turns out to be approximately linear in log pₙ:
-  </p>
-
-  <div class="math-block">
-    <div class="math-label">Empirical Law</div>
-    <div class="math-big">
-      <span class="frac"><span class="frac-num">G</span><span class="frac-den">H</span></span> ≈ C(n) · log p<sub>n</sub>
-    </div>
-    <div style="margin-top:0.75rem; font-size:0.85rem; color:var(--text-dim)">
-      where C(n) ≈ 0.7, increasing slowly
-    </div>
-  </div>
-
-  <p>
-    Compare with the oblong formula G/H ∼ log(n)/e where 1/e ≈ 0.368.
-    The prime coefficient is roughly <strong>1.9× larger</strong> — primes stretch boxes almost
-    twice as aggressively as integers do.
-  </p>
-
+  <h2>The numbers</h2>
+  <p>The full comparison at selected dimensions, with all predictions and the empirical coefficient:</p>
   <div id="dataTableSection"></div>
 </section>
 
-<!-- ═══════════ ACT 8: COMPARISON ═══════════ -->
-<section class="section" data-anim>
+<!-- ═══════ ACT 9: COMPARISON ═══════ -->
+<section class="section" data-anim id="compSection">
   <h2>Two worlds</h2>
+  <p>
+    The oblong and puboid are governed by parallel constants playing analogous corrective roles.
+    Yet their mathematical universes are fundamentally different.
+  </p>
 
   <div class="comparison">
-    <div class="comp-card orange">
+    <div class="comp-card orange from-left" data-reveal>
       <h4 class="orange">Oblong Cuboid</h4>
-      <div class="comp-formula">G/H ∼ log(n) / e</div>
-      <ul>
+      <div class="comp-formula">G/H ~ log(n) / e</div>
+      <ul class="comp-list">
         <li>Stirling gives exact coefficients</li>
-        <li>Euler–Mascheroni constant γ corrects</li>
+        <li>Euler–Mascheroni constant γ ≈ 0.577 corrects</li>
         <li>γ = −Γ′(1) — appears throughout physics</li>
         <li>Reflects continuous, additive structure</li>
       </ul>
     </div>
-    <div class="comp-card blue">
+    <div class="comp-card blue from-right" data-reveal>
       <h4 class="blue">Puboid</h4>
       <div class="comp-formula">G/H ≈ C(n) · log p<sub>n</sub></div>
-      <ul>
+      <ul class="comp-list">
         <li>No "Stirling for primorials" exists</li>
-        <li>Meissel–Mertens constant B₁ corrects</li>
+        <li>Meissel–Mertens constant B₁ ≈ 0.261 corrects</li>
         <li>B₁ has no known physics applications</li>
         <li>Reflects discrete, multiplicative structure</li>
       </ul>
@@ -882,60 +890,58 @@
   </div>
 
   <p>
-    The constants γ and B₁ play parallel roles — correcting leading asymptotics in their
-    respective domains. They're even related:
+    The constants are connected:
   </p>
 
   <div class="math-block">
     <div class="math-label">Connection</div>
-    B₁ = γ + Σ<sub>p prime</sub> [ log(1 − 1/p) + 1/p ]
+    B₁ = γ + Σ<sub style="font-size:0.7em">p prime</sub> [ log(1 − 1/p) + 1/p ]
   </div>
 
   <p>
-    But their <em>universality</em> differs fundamentally. γ appears in every branch of physics
-    that involves regularisation. B₁ never does. This isn't an accident — it reflects the
-    deep incompatibility between prime distributions and continuous symmetries.
+    Both correct leading asymptotic terms. But their <em>universality</em> differs profoundly.
+    γ appears in every branch of physics involving regularisation. B₁ never does.
+    This isn't coincidence — it's structural.
   </p>
 </section>
 
-<!-- ═══════════ ACT 9: WHY PRIMES AREN'T PHYSICS ═══════════ -->
-<section class="section" data-anim>
+<!-- ═══════ ACT 10: PHYSICS ═══════ -->
+<section class="section" data-anim id="physicsSection">
   <h2>Why primes don't do physics</h2>
   <p>
-    Four structural reasons why B₁ (and prime distributions generally) lack physical applications:
+    Four structural reasons why B₁ (and prime distributions generally) are absent from physics:
   </p>
 
-  <div class="highlight-box">
-    <strong>Continuous symmetry.</strong> Physics is built on Lorentz, gauge, and diffeomorphism symmetries —
-    all continuous. Prime distributions are discretely irregular. There is no natural Lie group
-    whose structure constants involve primorials.
-  </div>
-
-  <div class="highlight-box blue">
-    <strong>Density.</strong> QED regularisation sums over <em>all</em> momentum states. Primes are too sparse
-    to serve as a regularisation scheme without missing most of the physics. You can't build
-    a path integral from prime-indexed modes.
-  </div>
-
-  <div class="highlight-box emerald">
-    <strong>Multiplicative vs additive.</strong> B₁ arises from unique factorisation — fundamentally multiplicative.
-    Conservation laws (energy, momentum, charge) are additive. The mathematical structures
-    don't match.
-  </div>
-
-  <div class="highlight-box rose">
-    <strong>No analytic continuation.</strong> The gamma function Γ(s) extends factorials. The zeta function
-    ζ(s) extends sums. Primorials ∏pᵢ and Σ(1/pᵢ) lack clean analytic continuations — so they
-    can't naturally appear in regularisation procedures.
+  <div class="physics-grid" id="physicsGrid">
+    <div class="physics-card" data-reveal-card>
+      <h4 class="orange">Continuous Symmetry</h4>
+      <p>Physics is built on Lorentz, gauge, and diffeomorphism symmetries — all continuous.
+      Prime distributions are discretely irregular, with no natural Lie group structure.</p>
+    </div>
+    <div class="physics-card" data-reveal-card>
+      <h4 class="blue">Density</h4>
+      <p>QED regularisation sums over <em>all</em> momentum states. Primes are too sparse
+      (pₙ ~ n log n vs integers growing as n) to serve as a regularisation scheme.</p>
+    </div>
+    <div class="physics-card" data-reveal-card>
+      <h4 class="emerald">Multiplicative vs Additive</h4>
+      <p>B₁ arises from unique factorisation — fundamentally multiplicative.
+      Conservation laws (energy, momentum, charge) are additive. The structures don't match.</p>
+    </div>
+    <div class="physics-card" data-reveal-card>
+      <h4 class="violet">No Analytic Continuation</h4>
+      <p>Γ(s) extends factorials; ζ(s) extends integer sums. Primorials and Σ(1/pᵢ) lack
+      clean analytic continuations, so they can't appear in regularisation.</p>
+    </div>
   </div>
 </section>
 
 <div class="pullquote" data-anim>
   γ is universal. B₁ is specific.<br>
-  That's why physics uses one and ignores the other.
+  That is why physics uses one and ignores the other.
 </div>
 
-<!-- ═══════════ OPEN PROBLEM ═══════════ -->
+<!-- ═══════ OPEN PROBLEMS ═══════ -->
 <section class="section" data-anim>
   <div class="open-problem">
     <div class="open-tag">Open Problem</div>
@@ -947,14 +953,25 @@
     </p>
     <p class="dim" style="margin-bottom:0">
       Specifically: is there an analytic relationship between C(n) and the remainder
-      pₙ/π(pₙ) − log pₙ? If so, the shape geometry of prime-sided boxes would be
+      pₙ/π(pₙ) − log pₙ? The shape geometry of prime-sided boxes would then be
       directly governed by the distribution of primes — a concrete geometric manifestation
-      of the Prime Number Theorem's error.
+      of the PNT's irreducible error.
+    </p>
+  </div>
+
+  <div class="open-problem" style="margin-top:1.5rem">
+    <div class="open-tag">Further Directions</div>
+    <h3>Beyond primes</h3>
+    <p class="dim" style="margin-bottom:0">
+      What G/H growth rates arise from twin primes, primes in arithmetic progressions,
+      or values of multiplicative functions? The isoperimetric framework applies to any
+      positive sequence — different growth rates would reflect different distributional
+      properties, potentially revealing new geometric signatures of arithmetic structure.
     </p>
   </div>
 </section>
 
-<!-- ═══════════ FOOTER ═══════════ -->
+<!-- ═══════ FOOTER ═══════ -->
 <footer>
   <p>
     Based on: <em>Isoperimetric Quotients of Anisotropic Cuboids: Shape Asymmetry in Integer and Prime Sequences</em>
@@ -968,14 +985,13 @@
 
 <script>
 // ═══════════════════════════════════════
-// PRIME SIEVE + COMPUTATIONS
+// PRIME SIEVE & COMPUTATION
 // ═══════════════════════════════════════
 function sieve(limit) {
   const s = new Uint8Array(limit + 1).fill(1);
   s[0] = s[1] = 0;
-  for (let i = 2; i * i <= limit; i++) {
+  for (let i = 2; i * i <= limit; i++)
     if (s[i]) for (let j = i * i; j <= limit; j += i) s[j] = 0;
-  }
   const primes = [];
   for (let i = 2; i <= limit; i++) if (s[i]) primes.push(i);
   return primes;
@@ -983,84 +999,64 @@ function sieve(limit) {
 
 const PRIMES = sieve(50000);
 
-function computeGH_oblong(n) {
-  // G = (n!)^(1/n), H = n / H_n*
+function ghOblong(n) {
   let logG = 0, harmSum = 0;
-  for (let i = 1; i <= n; i++) {
-    logG += Math.log(i);
-    harmSum += 1 / i;
-  }
-  const G = Math.exp(logG / n);
-  const H = n / harmSum;
+  for (let i = 1; i <= n; i++) { logG += Math.log(i); harmSum += 1 / i; }
+  const G = Math.exp(logG / n), H = n / harmSum;
   return { G, H, ratio: G / H };
 }
 
-function computeGH_puboid(n) {
+function ghPuboid(n) {
   let logG = 0, harmSum = 0;
-  for (let i = 0; i < n; i++) {
-    logG += Math.log(PRIMES[i]);
-    harmSum += 1 / PRIMES[i];
-  }
-  const G = Math.exp(logG / n);
-  const H = n / harmSum;
+  for (let i = 0; i < n; i++) { logG += Math.log(PRIMES[i]); harmSum += 1 / PRIMES[i]; }
+  const G = Math.exp(logG / n), H = n / harmSum;
   return { G, H, ratio: G / H, pn: PRIMES[n - 1] };
 }
 
 // ═══════════════════════════════════════
-// CHART DRAWING
+// GENERIC CHART DRAWING UTILITY
 // ═══════════════════════════════════════
-const canvas = document.getElementById('mainChart');
-const ctx = canvas.getContext('2d');
-
-function drawChart(maxN) {
+function setupCanvas(canvas) {
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
-  const W = rect.width, H = rect.height;
+  return { ctx, W: rect.width, H: rect.height };
+}
 
-  ctx.clearRect(0, 0, W, H);
+function drawLine(ctx, pts, toCanvas, color, lineWidth, dash) {
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  ctx.setLineDash(dash || []);
+  pts.forEach((p, i) => {
+    const [cx, cy] = toCanvas(p.x, p.y);
+    i === 0 ? ctx.moveTo(cx, cy) : ctx.lineTo(cx, cy);
+  });
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
 
-  const pad = { top: 20, right: 20, bottom: 40, left: 55 };
+function drawGrid(ctx, pad, W, H, xMin, xMax, yMax, labelX) {
   const cw = W - pad.left - pad.right;
   const ch = H - pad.top - pad.bottom;
 
-  // compute data
-  const step = Math.max(1, Math.floor(maxN / 100));
-  const pts_obl = [], pts_pub = [], pts_exact = [], pts_naive = [];
-
-  let yMax = 0;
-  for (let n = 3; n <= maxN; n += step) {
-    const obl = computeGH_oblong(n);
-    const pub = computeGH_puboid(n);
-    const exact = Math.log(n) / Math.E;
-    const naive = Math.log(Math.log(n));
-
-    pts_obl.push({ x: n, y: obl.ratio });
-    pts_pub.push({ x: n, y: pub.ratio });
-    pts_exact.push({ x: n, y: exact });
-    pts_naive.push({ x: n, y: naive });
-
-    yMax = Math.max(yMax, pub.ratio);
-  }
-
-  yMax = yMax * 1.1;
-
   function toCanvas(x, y) {
     return [
-      pad.left + (x - 3) / (maxN - 3) * cw,
+      pad.left + (x - xMin) / (xMax - xMin) * cw,
       pad.top + ch - (y / yMax) * ch
     ];
   }
 
-  // grid
+  // Y grid
   ctx.strokeStyle = 'rgba(68,64,60,0.3)';
   ctx.lineWidth = 0.5;
   const yTicks = 5;
   for (let i = 0; i <= yTicks; i++) {
     const yVal = (yMax / yTicks) * i;
-    const [, cy] = toCanvas(3, yVal);
+    const [, cy] = toCanvas(xMin, yVal);
     ctx.beginPath();
     ctx.moveTo(pad.left, cy);
     ctx.lineTo(W - pad.right, cy);
@@ -1068,49 +1064,109 @@ function drawChart(maxN) {
     ctx.fillStyle = '#78716c';
     ctx.font = '11px JetBrains Mono, monospace';
     ctx.textAlign = 'right';
-    ctx.fillText(yVal.toFixed(1), pad.left - 8, cy + 4);
+    ctx.fillText(yVal.toFixed(yMax < 2 ? 2 : 1), pad.left - 8, cy + 4);
   }
 
-  // x-axis labels
+  // X labels
   ctx.textAlign = 'center';
-  for (let x = 50; x <= maxN; x += Math.max(50, Math.floor(maxN / 6))) {
+  const xStep = Math.max(50, Math.floor((xMax - xMin) / 6));
+  for (let x = Math.ceil(xMin / xStep) * xStep; x <= xMax; x += xStep) {
     const [cx] = toCanvas(x, 0);
     ctx.fillStyle = '#78716c';
     ctx.fillText(x, cx, H - pad.bottom + 20);
   }
-  ctx.fillText('n', W - pad.right, H - pad.bottom + 20);
-
-  // draw lines
-  function drawLine(pts, color, lineWidth, dash) {
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = lineWidth;
-    ctx.setLineDash(dash || []);
-    pts.forEach((p, i) => {
-      const [cx, cy] = toCanvas(p.x, p.y);
-      i === 0 ? ctx.moveTo(cx, cy) : ctx.lineTo(cx, cy);
-    });
-    ctx.stroke();
-    ctx.setLineDash([]);
+  if (labelX) {
+    ctx.fillText(labelX, W - pad.right, H - pad.bottom + 20);
   }
 
-  drawLine(pts_naive, '#fb7185', 1.5, [6, 4]);      // naive log log n
-  drawLine(pts_exact, '#34d399', 1.5, [6, 4]);      // exact log n / e
-  drawLine(pts_obl, '#f97316', 2.5);                 // oblong
-  drawLine(pts_pub, '#38bdf8', 2.5);                 // puboid
+  return toCanvas;
 }
 
-// slider
+// ═══════════════════════════════════════
+// MAIN G/H CHART
+// ═══════════════════════════════════════
+const mainCanvas = document.getElementById('mainChart');
+
+function drawMainChart(maxN) {
+  const { ctx, W, H } = setupCanvas(mainCanvas);
+  ctx.clearRect(0, 0, W, H);
+  const pad = { top: 20, right: 20, bottom: 40, left: 55 };
+
+  const step = Math.max(1, Math.floor(maxN / 120));
+  const pts_obl = [], pts_pub = [], pts_exact = [], pts_naive = [];
+  let yMax = 0;
+
+  for (let n = 3; n <= maxN; n += step) {
+    const obl = ghOblong(n);
+    const pub = ghPuboid(n);
+    pts_obl.push({ x: n, y: obl.ratio });
+    pts_pub.push({ x: n, y: pub.ratio });
+    pts_exact.push({ x: n, y: Math.log(n) / Math.E });
+    pts_naive.push({ x: n, y: Math.log(Math.log(n)) });
+    yMax = Math.max(yMax, pub.ratio);
+  }
+  yMax *= 1.1;
+
+  const toCanvas = drawGrid(ctx, pad, W, H, 3, maxN, yMax, 'n');
+
+  drawLine(ctx, pts_naive, toCanvas, '#fb7185', 1.5, [6, 4]);
+  drawLine(ctx, pts_exact, toCanvas, '#34d399', 1.5, [6, 4]);
+  drawLine(ctx, pts_obl, toCanvas, '#f97316', 2.5);
+  drawLine(ctx, pts_pub, toCanvas, '#38bdf8', 2.5);
+}
+
 const nSlider = document.getElementById('nSlider');
 const nDisplay = document.getElementById('nDisplay');
-nSlider.addEventListener('input', () => {
-  nDisplay.textContent = nSlider.value;
-  drawChart(parseInt(nSlider.value));
-});
+nSlider.addEventListener('input', () => { nDisplay.textContent = nSlider.value; drawMainChart(+nSlider.value); });
 
-// initial draw
-window.addEventListener('load', () => drawChart(200));
-window.addEventListener('resize', () => drawChart(parseInt(nSlider.value)));
+// ═══════════════════════════════════════
+// C(n) CHART
+// ═══════════════════════════════════════
+const cnCanvas = document.getElementById('cnChart');
+
+function drawCnChart(maxN) {
+  const { ctx, W, H } = setupCanvas(cnCanvas);
+  ctx.clearRect(0, 0, W, H);
+  const pad = { top: 20, right: 20, bottom: 40, left: 55 };
+
+  const step = Math.max(1, Math.floor(maxN / 150));
+  const pts_cn = [];
+  let yMax = 0;
+
+  for (let n = 5; n <= maxN; n += step) {
+    const pub = ghPuboid(n);
+    const cn = pub.ratio / Math.log(pub.pn);
+    pts_cn.push({ x: n, y: cn });
+    yMax = Math.max(yMax, cn);
+  }
+  yMax = Math.max(yMax * 1.15, 1);
+
+  const toCanvas = drawGrid(ctx, pad, W, H, 5, maxN, yMax, 'n');
+
+  // Reference line: 1/e
+  const invE = 1 / Math.E;
+  const [, yInvE] = toCanvas(5, invE);
+  ctx.beginPath();
+  ctx.strokeStyle = '#f59e0b';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([6, 4]);
+  ctx.moveTo(pad.left, yInvE);
+  ctx.lineTo(W - pad.right, yInvE);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Label
+  ctx.fillStyle = '#f59e0b';
+  ctx.font = '11px JetBrains Mono, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText('1/e', pad.left + 6, yInvE - 6);
+
+  drawLine(ctx, pts_cn, toCanvas, '#a78bfa', 2.5);
+}
+
+const cnSlider = document.getElementById('cnSlider');
+const cnDisplay = document.getElementById('cnDisplay');
+cnSlider.addEventListener('input', () => { cnDisplay.textContent = cnSlider.value; drawCnChart(+cnSlider.value); });
 
 // ═══════════════════════════════════════
 // EXPLORER
@@ -1120,11 +1176,10 @@ const expDisplay = document.getElementById('expDisplay');
 const explorerGrid = document.getElementById('explorerGrid');
 
 function updateExplorer() {
-  const n = parseInt(expSlider.value);
+  const n = +expSlider.value;
   expDisplay.textContent = n;
-
-  const obl = computeGH_oblong(n);
-  const pub = computeGH_puboid(n);
+  const obl = ghOblong(n);
+  const pub = ghPuboid(n);
   const exact = Math.log(n) / Math.E;
   const cn = pub.ratio / Math.log(pub.pn);
 
@@ -1137,12 +1192,12 @@ function updateExplorer() {
     <div class="stat-card">
       <div class="stat-label">Puboid G/H</div>
       <div class="stat-value blue">${pub.ratio.toFixed(3)}</div>
-      <div class="stat-sub">p<sub>${n}</sub> = ${pub.pn}</div>
+      <div class="stat-sub">p<sub>${n}</sub> = ${pub.pn.toLocaleString()}</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">C(n)</div>
-      <div class="stat-value violet">${cn.toFixed(3)}</div>
-      <div class="stat-sub">Ratio / log p<sub>n</sub></div>
+      <div class="stat-value violet">${cn.toFixed(4)}</div>
+      <div class="stat-sub">G/H ÷ log p<sub>n</sub></div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Pub / Obl Ratio</div>
@@ -1150,20 +1205,17 @@ function updateExplorer() {
       <div class="stat-sub">→ ~1.9× asymptotically</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Oblong Volume</div>
-      <div class="stat-value orange">${n}!</div>
-      <div class="stat-sub">≈ 10<sup>${(obl.ratio * n * Math.log10(Math.E)).toFixed(0)}</sup></div>
+      <div class="stat-label">Oblong M</div>
+      <div class="stat-value orange">${(2 * n * obl.ratio).toFixed(1)}</div>
+      <div class="stat-sub">2n · G/H</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Puboid Volume</div>
-      <div class="stat-value blue">${n}#</div>
-      <div class="stat-sub">(primorial of p<sub>${n}</sub>)</div>
-    </div>
-  `;
+      <div class="stat-label">Puboid M</div>
+      <div class="stat-value blue">${(2 * n * pub.ratio).toFixed(1)}</div>
+      <div class="stat-sub">2n · G/H</div>
+    </div>`;
 }
-
 expSlider.addEventListener('input', updateExplorer);
-updateExplorer();
 
 // ═══════════════════════════════════════
 // DATA TABLE
@@ -1173,45 +1225,76 @@ function buildDataTable() {
   let html = `<div class="data-table-wrap"><table>
     <thead><tr>
       <th>n</th><th>p<sub>n</sub></th>
-      <th>Oblong G/H</th><th>log(n)/e</th>
-      <th>Puboid G/H</th><th>log log n</th>
-      <th>C(n)</th><th>Pub/Obl</th>
+      <th style="color:var(--accent-orange)">Obl G/H</th><th style="color:var(--accent-emerald)">log n/e</th>
+      <th style="color:var(--accent-blue)">Pub G/H</th><th style="color:var(--accent-rose)">log log n</th>
+      <th style="color:var(--accent-violet)">C(n)</th><th>Pub/Obl</th>
     </tr></thead><tbody>`;
 
   for (const n of ns) {
-    const obl = computeGH_oblong(n);
-    const pub = computeGH_puboid(n);
-    const exact = Math.log(n) / Math.E;
-    const naive = Math.log(Math.log(n));
+    const obl = ghOblong(n);
+    const pub = ghPuboid(n);
     const cn = pub.ratio / Math.log(pub.pn);
-
     html += `<tr>
-      <td>${n}</td>
-      <td>${pub.pn}</td>
+      <td>${n}</td><td>${pub.pn.toLocaleString()}</td>
       <td class="td-highlight">${obl.ratio.toFixed(3)}</td>
-      <td class="td-emerald">${exact.toFixed(3)}</td>
+      <td class="td-emerald">${(Math.log(n)/Math.E).toFixed(3)}</td>
       <td class="td-blue">${pub.ratio.toFixed(3)}</td>
-      <td class="td-highlight" style="color:var(--accent-rose)">${naive.toFixed(3)}</td>
+      <td style="color:var(--accent-rose)">${Math.log(Math.log(n)).toFixed(3)}</td>
       <td style="color:var(--accent-violet)">${cn.toFixed(3)}</td>
-      <td class="td-highlight">${(pub.ratio / obl.ratio).toFixed(2)}×</td>
-    </tr>`;
+      <td class="td-highlight">${(pub.ratio/obl.ratio).toFixed(2)}×</td></tr>`;
   }
-
   html += '</tbody></table></div>';
   document.getElementById('dataTableSection').innerHTML = html;
 }
-buildDataTable();
+
+// ═══════════════════════════════════════
+// HERO GRID — floating primes
+// ═══════════════════════════════════════
+function populateHeroGrid() {
+  const grid = document.getElementById('heroGrid');
+  const nums = [...PRIMES.slice(0, 30), 1,2,3,4,5,6,7,8,9,10];
+  for (let i = 0; i < 40; i++) {
+    const span = document.createElement('span');
+    span.textContent = nums[i % nums.length];
+    span.style.left = (Math.random() * 100) + '%';
+    span.style.top = (Math.random() * 100) + '%';
+    span.style.animationDelay = (Math.random() * 20) + 's';
+    span.style.animationDuration = (15 + Math.random() * 15) + 's';
+    grid.appendChild(span);
+  }
+}
 
 // ═══════════════════════════════════════
 // SCROLL ANIMATIONS
 // ═══════════════════════════════════════
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
-}, { threshold: 0.15 });
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
 
-document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+}, { threshold: 0.2 });
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+window.addEventListener('load', () => {
+  populateHeroGrid();
+  drawMainChart(200);
+  drawCnChart(300);
+  updateExplorer();
+  buildDataTable();
+
+  document.querySelectorAll('[data-anim]').forEach(el => sectionObserver.observe(el));
+  document.querySelectorAll('[data-reveal]').forEach(el => cardObserver.observe(el));
+  document.querySelectorAll('[data-reveal-card]').forEach(el => cardObserver.observe(el));
+});
+
+window.addEventListener('resize', () => {
+  drawMainChart(+nSlider.value);
+  drawCnChart(+cnSlider.value);
+});
 </script>
 </body>
 </html>
+
